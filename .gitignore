@@ -1,0 +1,59 @@
+# --- General / OS ---
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+*.swp
+
+# --- Docker ---
+.docker/
+# Nie ignorujemy docker-compose.yml, ale ignorujemy dane z wolumenów
+docker-volumes/
+postgres_data/
+
+# --- Environment & Secrets (BARDZO WAŻNE) ---
+.env
+*.env
+secrets.json
+*.pem
+*.key
+
+# --- Backend (Django / Python) ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+.python-version
+db.sqlite3
+media/
+staticfiles/
+/backend/static/
+
+# --- Frontend (Angular / Node) ---
+node_modules/
+/frontend/dist/
+/frontend/.angular/
+/frontend/browser/
+.npm
+npm-debug.log*
+yarn-error.log*
+.angular-errors.log
+
+# --- Mobile (Android / Jetpack Compose) ---
+/mobile/.gradle/
+/mobile/build/
+/mobile/local.properties
+/mobile/captures/
+/mobile/*.apk
+/mobile/*.aab
+/mobile/*.keystore
+/mobile/*.jks
+*.iml
+.navigation/
+
+# --- AWS / Cloud ---
+.aws/
+.elasticbeanstalk/
+.terraform/
