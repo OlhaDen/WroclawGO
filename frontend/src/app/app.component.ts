@@ -29,6 +29,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  categoryMap: Record<string, string> = {
+    'Muzeum': 'blue',
+    'Park': 'green',
+    'Krasnal': 'orange',
+    'Kościół': 'white',
+    'Zabytek': 'purple'
+  };
+
   loadAttractions() {
     this.attractionService.getAttractions().subscribe({
       next: (data) => {
@@ -45,6 +53,9 @@ export class AppComponent implements OnInit {
           // 2. Pobranie właściwości (zwróć uwagę na nazwy!)
           const name = feature.properties?.name || 'Brak nazwy';
           const description = feature.properties?.description || 'Brak opisu';
+          const category = feature.properties?.category;
+
+          const markerColor = this.categoryMap[category] || '#FF0000';
 
           // 3. Tworzenie markera i popupu
           const popup = new maplibregl.Popup({ offset: 25 })
@@ -55,7 +66,7 @@ export class AppComponent implements OnInit {
               </div>
             `);
 
-          new maplibregl.Marker({ color: '#FF0000' })
+          new maplibregl.Marker({ color: markerColor })
             .setLngLat([coords[0], coords[1]])
             .setPopup(popup)
             .addTo(this.map);

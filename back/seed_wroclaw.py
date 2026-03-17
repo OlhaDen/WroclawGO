@@ -1,6 +1,7 @@
 # backend/seed_wroclaw.py
 import os
 import django
+import pandas as pd
 
 # Konfiguracja Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
@@ -9,14 +10,21 @@ django.setup()
 from attractions.models import Attraction
 from django.contrib.gis.geos import Point
 
-def seed():
-    data = [
-        {"name": "Panorama Racławicka", "lat": 51.1107, "lng": 17.0444, "cat": "Muzeum"},
-        {"name": "Zoo Wrocław & Afrykarium", "lat": 51.1052, "lng": 17.0753, "cat": "Natura"},
-        {"name": "Hala Stulecia", "lat": 51.1069, "lng": 17.0768, "cat": "Zabytek"},
-        {"name": "Rynek (Ratusz)", "lat": 51.1095, "lng": 17.0328, "cat": "Kultura"},
-    ]
+def read_data(filename, category):
+    data = []
+    df = pd.read_csv(filename)
+    for _, row in df.iterrows():
+        data.append({
+            "name": row["nazwa"],
+            "lat": float(row["lat"]),
+            "lng": float(row["lng"]),
+            "cat": category
+        })
+    return data
 
+def seed(filename, category):
+    data = read_data(filename, category)
+    
     for item in data:
         # Tworzymy punkt (longitude, latitude)
         pnt = Point(item['lng'], item['lat'])
@@ -27,4 +35,9 @@ def seed():
 
 
 if __name__ == '__main__':
-    seed()
+
+    seed("museums.csv", "Muzeum")
+    seed("zabytki.csv", "Zabytki")
+    seed("kosciol.csv", "Kościół")
+    seed("krasnale.csv", "Krasnal")
+    seed("parks.csv", "Natura")
