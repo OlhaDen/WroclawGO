@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,6 +27,11 @@ SECRET_KEY = 'django-insecure-yt_%-v!6kvfw#=$$jj8x4c7^$j448%8sxm2k$43vd2^w5jvro5
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+AUTH_USER_MODEL = 'attractions.User'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 

@@ -3,6 +3,7 @@ export interface AttractionProperties {
   name: string;
   description: string;
   category: string;
+  points_reward: number;
 }
 
 export interface AttractionGeometry {

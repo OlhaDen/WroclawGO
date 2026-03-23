@@ -33,14 +33,14 @@ export class AppComponent implements OnInit {
     'Muzeum': 'blue',
     'Park': 'green',
     'Krasnal': 'orange',
-    'Kościół': 'white',
-    'Zabytek': 'purple'
+    'Kościół': 'pink',
+    'Zabytki': 'purple'
   };
 
   loadAttractions() {
     this.attractionService.getAttractions().subscribe({
       next: (data) => {
-        console.log('Dane z API:', data); // Zobacz to w konsoli!
+        console.log('Dane z API:', data);
 
         data.features.forEach(feature => {
           // 1. Sprawdzenie współrzędnych
