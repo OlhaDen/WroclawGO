@@ -3,7 +3,6 @@ import os
 import django
 import pandas as pd
 
-# Konfiguracja Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 

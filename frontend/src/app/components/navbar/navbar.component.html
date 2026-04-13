@@ -1,0 +1,42 @@
+<header class="top-nav">
+  <div class="brand">
+    <span class="brand-name">WroclawGO</span>
+  </div>
+
+  <nav aria-label="Main navigation">
+    <a
+      class="nav-tab"
+      routerLink="/map"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Map
+    </a>
+
+    <ng-container *ngIf="currentUser$ | async as currentUser; else guestAvatar">
+      <a
+        class="nav-tab nav-identity"
+        routerLink="/your-avatar"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ currentUser.username }}
+      </a>
+
+      <button type="button" class="logout-button" (click)="logout()">
+        Logout
+      </button>
+    </ng-container>
+
+    <ng-template #guestAvatar>
+      <a
+        class="nav-tab nav-identity"
+        routerLink="/login"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Avatar
+      </a>
+    </ng-template>
+  </nav>
+</header>

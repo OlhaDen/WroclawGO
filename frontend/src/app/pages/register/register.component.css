@@ -1,0 +1,137 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.auth-page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top left, rgba(31, 141, 191, 0.16), transparent 28%),
+    linear-gradient(180deg, #f7fbff 0%, #ebf2f8 100%);
+}
+
+.auth-card {
+  width: min(560px, 100%);
+  padding: 2rem;
+  border: 1px solid rgba(188, 204, 217, 0.8);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 64px rgba(18, 41, 67, 0.14);
+}
+
+.auth-copy h1 {
+  margin: 0.35rem 0 0;
+  color: #10263f;
+  font-size: 2rem;
+}
+
+.auth-copy p {
+  margin: 0.8rem 0 0;
+  color: #51687e;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #0f5d8c;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.auth-form {
+  margin-top: 1.6rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #24384f;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+input {
+  border: 1px solid #cfd8e3;
+  border-radius: 14px;
+  padding: 0.95rem 1rem;
+  font: inherit;
+  color: #10263f;
+  background: #ffffff;
+}
+
+input:focus {
+  outline: 2px solid rgba(31, 141, 191, 0.22);
+  border-color: #1f8dbf;
+}
+
+.field-hint,
+.field-error,
+.form-error {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.field-hint {
+  color: #51687e;
+}
+
+.field-error,
+.form-error {
+  color: #b42318;
+}
+
+.primary-action {
+  margin-top: 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.95rem 1.2rem;
+  background: linear-gradient(90deg, #1f8dbf, #0f5d8c);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-action:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.auth-links {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.auth-links a {
+  color: #0f5d8c;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .auth-page {
+    padding: 1rem;
+  }
+
+  .auth-card {
+    padding: 1.4rem;
+    border-radius: 22px;
+  }
+
+  .auth-copy h1 {
+    font-size: 1.7rem;
+  }
+
+  .auth-links {
+    flex-direction: column;
+  }
+}

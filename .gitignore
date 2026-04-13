@@ -30,6 +30,7 @@ db.sqlite3
 media/
 staticfiles/
 /backend/static/
+.venv
 
 # --- Frontend (Angular / Node) ---
 node_modules/

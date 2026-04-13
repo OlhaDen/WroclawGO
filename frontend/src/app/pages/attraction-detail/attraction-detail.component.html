@@ -1,0 +1,31 @@
+<section class="placeholder-page">
+  <div class="placeholder-card" *ngIf="attractionId$ | async as attractionId">
+    <p class="eyebrow">Attraction Details</p>
+    <h1>Attraction #{{ attractionId }}</h1>
+    <p>
+      This placeholder will become the full attraction experience with photos, history,
+      user tips, and quest-based interactions.
+    </p>
+
+    <div class="placeholder-grid">
+      <article>
+        <h2>Overview</h2>
+        <p>Future location summary, opening times, and quick navigation hints.</p>
+      </article>
+      <article>
+        <h2>Story</h2>
+        <p>Historical context and curated interesting facts for tourists.</p>
+      </article>
+      <article>
+        <h2>Rewards</h2>
+        <p>Point rewards, challenge tasks, and completion milestones.</p>
+      </article>
+      <article>
+        <h2>Community Tips</h2>
+        <p>Future user notes, accessibility details, and practical advice.</p>
+      </article>
+    </div>
+
+    <a class="back-link" routerLink="/map">Back to map</a>
+  </div>
+</section>

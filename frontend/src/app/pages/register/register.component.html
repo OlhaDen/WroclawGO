@@ -1,0 +1,78 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="auth-copy">
+      <p class="eyebrow">Tourist Game</p>
+      <h1>Create your account</h1>
+      <p>
+        Register to save progress, compete for points, and unlock your personal explorer profile.
+      </p>
+    </div>
+
+    <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+      <label>
+        <span>Username</span>
+        <input type="text" formControlName="username" autocomplete="username" />
+      </label>
+      <p class="field-error" *ngIf="registerForm.controls.username.touched && registerForm.controls.username.errors?.['required']">
+        Username is required.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.username.touched && registerForm.controls.username.errors?.['minlength']">
+        Username must be at least 3 characters.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.username.errors?.['server']">
+        {{ registerForm.controls.username.errors?.['server'] }}
+      </p>
+
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" autocomplete="email" />
+      </label>
+      <p class="field-error" *ngIf="registerForm.controls.email.touched && registerForm.controls.email.errors?.['required']">
+        Email is required.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.email.touched && registerForm.controls.email.errors?.['email']">
+        Enter a valid email address.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.email.errors?.['server']">
+        {{ registerForm.controls.email.errors?.['server'] }}
+      </p>
+
+      <label>
+        <span>Password</span>
+        <input type="password" formControlName="password" autocomplete="new-password" />
+      </label>
+      <p class="field-hint">Use at least 8 characters with uppercase, lowercase, number, and special character.</p>
+      <p class="field-error" *ngIf="registerForm.controls.password.touched && registerForm.controls.password.errors?.['required']">
+        Password is required.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.password.errors?.['server']">
+        {{ registerForm.controls.password.errors?.['server'] }}
+      </p>
+
+      <label>
+        <span>Confirm password</span>
+        <input type="password" formControlName="passwordConfirm" autocomplete="new-password" />
+      </label>
+      <p class="field-error" *ngIf="registerForm.controls.passwordConfirm.touched && registerForm.controls.passwordConfirm.errors?.['required']">
+        Password confirmation is required.
+      </p>
+      <p class="field-error" *ngIf="registerForm.errors?.['passwordsMismatch'] && registerForm.controls.passwordConfirm.touched">
+        Passwords do not match.
+      </p>
+      <p class="field-error" *ngIf="registerForm.controls.passwordConfirm.errors?.['server']">
+        {{ registerForm.controls.passwordConfirm.errors?.['server'] }}
+      </p>
+
+      <p class="form-error" *ngIf="formError">{{ formError }}</p>
+
+      <button class="primary-action" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="auth-links">
+      <a routerLink="/login">Already have an account?</a>
+      <a routerLink="/map">Back to map</a>
+    </div>
+  </div>
+</section>

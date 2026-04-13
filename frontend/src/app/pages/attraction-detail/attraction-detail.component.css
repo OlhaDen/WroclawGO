@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.placeholder-page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(31, 141, 191, 0.16), transparent 24%),
+    linear-gradient(180deg, #f5f9ff 0%, #ebf1f8 100%);
+}
+
+.placeholder-card {
+  width: min(860px, 100%);
+  padding: 2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(177, 194, 210, 0.75);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 56px rgba(15, 42, 69, 0.15);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #0f5d8c;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.55rem 0 0;
+  color: #10263f;
+  font-size: 2rem;
+}
+
+.placeholder-card > p {
+  margin-top: 0.85rem;
+  color: #4d647a;
+  line-height: 1.65;
+}
+
+.placeholder-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.placeholder-grid article {
+  border: 1px solid rgba(200, 213, 227, 0.9);
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(246, 250, 255, 0.85);
+}
+
+.placeholder-grid h2 {
+  margin: 0;
+  color: #163a5a;
+  font-size: 1rem;
+}
+
+.placeholder-grid p {
+  margin: 0.6rem 0 0;
+  color: #4f657a;
+  line-height: 1.5;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.35rem;
+  color: #0f5d8c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .placeholder-page {
+    padding: 1rem;
+  }
+
+  .placeholder-card {
+    padding: 1.4rem;
+  }
+
+  .placeholder-grid {
+    grid-template-columns: 1fr;
+  }
+}
