@@ -63,7 +63,7 @@
             </span>
           </div>
 
-          <p class=\"shop-card__price\"><span *ngIf=\"!isPremium(skin)\">{{ skin.price }}</span><span *ngIf=\"isPremium(skin)\">Free</span><span class=\"shop-card__price-unit\"> <span *ngIf=\"!isPremium(skin)\">points</span></span></p>
+          <p class="shop-card__price"><span *ngIf="!isPremium(skin)">{{ skin.price }}</span><span *ngIf="isPremium(skin)">Free</span><span class="shop-card__price-unit" *ngIf="!isPremium(skin)"> points</span></p>
         </div>
 
         <!-- Action section -->

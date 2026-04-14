@@ -34,7 +34,10 @@ export class AvatarShopComponent implements OnInit {
 
     this.shopService.getSkinColors().subscribe({
       next: (skins: SkinColor[]) => {
-        this.skinColors = skins;
+        this.skinColors = skins.map(skin => ({
+          ...skin,
+          name: skin.name === 'Moonlight Silver' ? 'Blush Pink' : skin.name
+        }));
         this.loading = false;
       },
       error: () => {
