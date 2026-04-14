@@ -31,7 +31,7 @@ export class AvatarShopComponent implements OnInit {
     this.errorMessage = null;
 
     this.shopService.getSkinColors().subscribe({
-      next: (skins) => {
+      next: (skins: SkinColor[]) => {
         this.skinColors = skins;
         this.loading = false;
       },

@@ -4,6 +4,7 @@ import { map, Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuthUser } from '../models/auth.model';
 import { AvatarSkin } from '../models/avatar-skin.model';
+import { SkinColor } from '../models/skin-color.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class ShopService {
 
   getSkins(): Observable<AvatarSkin[]> {
     return this.http.get<AvatarSkin[]>(this.apiUrl);
+  }
+
+  getSkinColors(): Observable<SkinColor[]> {
+    return this.http.get<SkinColor[]>('http://localhost:8000/api/shop/skins/');
   }
 
   purchaseSkin(skinId: number): Observable<AuthUser> {
