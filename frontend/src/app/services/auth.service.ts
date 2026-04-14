@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { AuthResponse, AuthUser, LoginRequest, RegisterRequest } from '../models/auth.model';
+import { SkinColor } from '../models/skin-color.model';
 
 const DEFAULT_SKIN_NAME = 'Golden Aura';
 
@@ -102,20 +103,20 @@ export class AuthService {
   }
 
   private normalizeUserSkins(user: AuthUser): AuthUser {
-    const defaultSkin = {
+    const defaultSkin: SkinColor = {
       id: -1,
       name: DEFAULT_SKIN_NAME,
       color_value: '#f7d455',
       price: 0,
       image_file_name: 'golden-aura.png'
-    } as AuthUser['selected_skin'];
+    };
 
     const ownedSkins = [...user.owned_skins];
     const ownedSkinNames = new Set(ownedSkins.map((skin) => skin.name));
     const ownedSkinIds = new Set(ownedSkins.map((skin) => skin.id));
 
     if (!ownedSkinNames.has(DEFAULT_SKIN_NAME)) {
-      ownedSkins.push(defaultSkin as any);
+      ownedSkins.push(defaultSkin);
       ownedSkinNames.add(DEFAULT_SKIN_NAME);
       ownedSkinIds.add(defaultSkin.id);
     }
@@ -127,7 +128,7 @@ export class AuthService {
     }
 
     if (selectedSkin && !ownedSkinIds.has(selectedSkin.id)) {
-      ownedSkins.push(selectedSkin as any);
+      ownedSkins.push(selectedSkin);
     }
 
     return {
