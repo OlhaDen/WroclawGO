@@ -31,7 +31,6 @@
         <ng-container *ngIf="activeSkin$ | async as activeSkin; else noActiveSkin">
           <div class="skin-preview" [style.background]="activeSkin.color_value"></div>
           <h2>{{ activeSkin.name }}</h2>
-          <p>{{ activeSkin.color_value }}</p>
         </ng-container>
         <ng-template #noActiveSkin>
           <p>No active skin selected yet.</p>
@@ -52,7 +51,6 @@
             <article class="skin-card" *ngFor="let skin of currentUser.owned_skins">
               <div class="shop-swatch" [style.background]="skin.color_value"></div>
               <strong>{{ skin.name }}</strong>
-              <span>{{ skin.color_value }}</span>
               <button
                 type="button"
                 [disabled]="selectingSkin || activeSkin?.id === skin.id"
