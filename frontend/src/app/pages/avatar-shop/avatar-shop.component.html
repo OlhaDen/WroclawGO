@@ -19,8 +19,10 @@
     <div class="status-row" *ngIf="currentUser$ | async as currentUser">
       <div class="status-card">
         <span class="status-title">Active skin</span>
-        <span class="status-value">
-          {{ activeSkinName(currentUser) }}
+        <span class="status-value">{{ activeSkinName(currentUser) }}</span>
+      </div>
+      <div class="status-card status-card-soft">
+        <span class="status-title">Owned skins</span>
         <span class="status-value">{{ currentUser.owned_skins.length }}</span>
       </div>
     </div>
@@ -34,44 +36,46 @@
           *ngFor="let skin of skinColors"
           class="shop-card"
           [class.shop-card--active]="isActive(currentUser, skin)"
-          [class.shop-card--premium]="isPremium(skin)"
-          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin) && !isPremium(skin)">
+          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin)">
 
-        <!-- Image section -->
-        <div class="shop-card__image-wrapper">
-          <img
-            [src]="getSkinImageUrl(skin)"
-            [alt]="skin.name + ' avatar skin preview'"
-            class="shop-card__image"
-            loading="lazy"
-            onerror="this.src='/assets/avatar-skins/placeholder.png'"
-          />
-        </div>
-
-        <!-- Content section -->
-        <div class="shop-card__body">
-          <div class="shop-card__header">
-            <div class="shop-card__title-block">
-              <h2 class="shop-card__title">{{ skin.name }}</h2>
-            </div>
-            <span class="shop-card__badge" [ngClass]="badgeClass(currentUser, skin)">
-              {{ badgeLabel(currentUser, skin) }}
-            </span>
+          <!-- Image section -->
+          <div class="shop-card__image-wrapper">
+            <img
+              [src]="getSkinImageUrl(skin)"
+              [alt]="skin.name + ' avatar skin preview'"
+              class="shop-card__image"
+              loading="lazy"
+              onerror="this.src='/assets/avatar-skins/placeholder.png'"
+            />
           </div>
 
-          <p class="shop-card__price"><span *ngIf="!isPremium(skin)">{{ skin.price }}</span><span *ngIf="isPremium(skin)">Free</span><span class="shop-card__price-unit" *ngIf="!isPremium(skin)"> points</span></p>
-        </div>
+          <!-- Content section -->
+          <div class="shop-card__body">
+            <div class="shop-card__header">
+              <div class="shop-card__title-block">
+                <h2 class="shop-card__title">{{ skin.name }}</h2>
+              </div>
+              <span class="shop-card__badge" [ngClass]="badgeClass(currentUser, skin)">
+                {{ badgeLabel(currentUser, skin) }}
+              </span>
+            </div>
 
-        <!-- Action section -->
-        <button
-          type="button"
-          class="shop-card__action"
-          [ngClass]="buttonClass(currentUser, skin)"
-          [disabled]="buttonDisabled(currentUser, skin)"
-          (click)="onPrimaryAction(currentUser, skin)">
-          {{ buttonLabel(currentUser, skin) }}
-        </button>
-      </article>
+            <p class="shop-card__price">
+              <span>{{ skin.price }}</span>
+              <span class="shop-card__price-unit">points</span>
+            </p>
+          </div>
+
+          <!-- Action section -->
+          <button
+            type="button"
+            class="shop-card__action"
+            [ngClass]="buttonClass(currentUser, skin)"
+            [disabled]="buttonDisabled(currentUser, skin)"
+            (click)="onPrimaryAction(currentUser, skin)">
+            {{ buttonLabel(currentUser, skin) }}
+          </button>
+        </article>
       </div>
     </ng-container>
 

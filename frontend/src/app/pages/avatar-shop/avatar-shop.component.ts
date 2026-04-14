@@ -35,10 +35,20 @@ export class AvatarShopComponent implements OnInit {
 
     this.shopService.getSkinColors().subscribe({
       next: (skins: SkinColor[]) => {
-        this.skinColors = skins.map(skin => ({
-          ...skin,
-          name: skin.name === 'Moonlight Silver' ? 'Blush Pink' : skin.name
-        }));
+        const normalizedSkins = skins.map((skin) => {
+          const name = skin.name === 'Moonlight Silver' ? 'Blush Pink' : skin.name;
+          const imageFileName = skin.image_file_name ?? skin.imageFileName ?? `${this.toSlug(name)}.png`;
+
+          return {
+            ...skin,
+            name,
+            price: name === DEFAULT_SKIN_NAME ? 0 : skin.price,
+            is_premium: false,
+            image_file_name: imageFileName
+          };
+        });
+
+        this.skinColors = this.ensureDefaultSkin(normalizedSkins);
         this.loading = false;
       },
       error: () => {
@@ -48,16 +58,31 @@ export class AvatarShopComponent implements OnInit {
     });
   }
 
+  ensureDefaultSkin(skins: SkinColor[]): SkinColor[] {
+    const hasDefault = skins.some((skin) => skin.name === DEFAULT_SKIN_NAME);
+
+    if (!hasDefault) {
+      skins.unshift({
+        id: -1,
+        name: DEFAULT_SKIN_NAME,
+        price: 0,
+        image_file_name: 'golden-aura.png',
+        is_premium: false
+      } as SkinColor);
+    }
+
+    return skins;
+  }
+
   getSkinImageFileName(skin: SkinColor): string {
-    // Try to use image_file_name first (from backend API)
     if (skin.image_file_name) {
       return skin.image_file_name;
     }
-    // Fallback to imageFileName if present
+
     if (skin.imageFileName) {
       return skin.imageFileName;
     }
-    // Generate filename from skin name if nothing else available
+
     return `${this.toSlug(skin.name)}.png`;
   }
 
@@ -65,8 +90,16 @@ export class AvatarShopComponent implements OnInit {
     return `${SKIN_IMAGE_PATH}${this.getSkinImageFileName(skin)}`;
   }
 
+  getActiveSkin(user: AuthUser): SkinColor | null {
+    if (user.selected_skin) {
+      return user.selected_skin;
+    }
+
+    return this.skinColors.find((skin) => skin.name === DEFAULT_SKIN_NAME) ?? null;
+  }
+
   activeSkinName(user: AuthUser): string {
-    return user.selected_skin?.name ?? DEFAULT_SKIN_NAME;
+    return this.getActiveSkin(user)?.name ?? 'No skin selected';
   }
 
   toSlug(value: string): string {
@@ -77,7 +110,7 @@ export class AvatarShopComponent implements OnInit {
   }
 
   isOwned(user: AuthUser, skin: SkinColor): boolean {
-    return user.owned_skins.some((owned) => owned.id === skin.id);
+    return skin.name === DEFAULT_SKIN_NAME || user.owned_skins.some((owned) => owned.id === skin.id);
   }
 
   isActive(user: AuthUser, skin: SkinColor): boolean {
@@ -85,24 +118,12 @@ export class AvatarShopComponent implements OnInit {
   }
 
   canAfford(user: AuthUser, skin: SkinColor): boolean {
-    return user.points >= skin.price;
-  }
-
-  canPurchase(user: AuthUser, skin: SkinColor): boolean {
-    return !this.isOwned(user, skin) && !skin.is_premium && this.canAfford(user, skin);
-  }
-
-  isPremium(skin: SkinColor): boolean {
-    return skin.is_premium === true;
+    return user.points >= (skin.price ?? 0);
   }
 
   buttonLabel(user: AuthUser, skin: SkinColor): string {
     if (this.isActive(user, skin)) {
       return 'Active';
-    }
-
-    if (this.isPremium(skin)) {
-      return 'Default';
     }
 
     if (this.isOwned(user, skin)) {
@@ -115,10 +136,6 @@ export class AvatarShopComponent implements OnInit {
   buttonClass(user: AuthUser, skin: SkinColor): string {
     if (this.isActive(user, skin)) {
       return 'ghost';
-    }
-
-    if (this.isPremium(skin)) {
-      return 'disabled';
     }
 
     if (this.isOwned(user, skin)) {
@@ -137,12 +154,8 @@ export class AvatarShopComponent implements OnInit {
       return true;
     }
 
-    if (this.isPremium(skin)) {
-      return true;
-    }
-
     if (this.isOwned(user, skin)) {
-      return false; // Can select owned skins
+      return false;
     }
 
     return !this.canAfford(user, skin);
@@ -192,24 +205,16 @@ export class AvatarShopComponent implements OnInit {
       return 'Active';
     }
 
-    if (this.isPremium(skin)) {
-      return 'Default';
-    }
-
     if (this.isOwned(user, skin)) {
       return 'Owned';
     }
 
-    return 'Premium';
+    return 'Available';
   }
 
   badgeClass(user: AuthUser, skin: SkinColor): string {
     if (this.isActive(user, skin)) {
       return 'badge--active';
-    }
-
-    if (this.isPremium(skin)) {
-      return 'badge--default';
     }
 
     if (this.isOwned(user, skin)) {
@@ -219,3 +224,4 @@ export class AvatarShopComponent implements OnInit {
     return 'badge--premium';
   }
 }
+
