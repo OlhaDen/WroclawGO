@@ -94,6 +94,10 @@ export class AuthService {
     return this.userSubject.value;
   }
 
+  updateCurrentUser(user: AuthUser): void {
+    this.userSubject.next(user);
+  }
+
   clearSession(): void {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);

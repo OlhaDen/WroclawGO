@@ -1,30 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthUser } from '../models/auth.model';
-import { SkinColor } from '../models/skin-color.model';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ShopService {
-  private readonly apiUrl = 'http://localhost:8000/api/shop';
-
-  constructor(private http: HttpClient) {}
-
-  getSkinColors(): Observable<SkinColor[]> {
-    return this.http.get<SkinColor[]>(`${this.apiUrl}/skins/`);
-  }
-
-  purchaseSkin(skinId: number): Observable<AuthUser> {
-    return this.http.post<AuthUser>(`${this.apiUrl}/skins/${skinId}/purchase/`, {});
-  }
-
-  selectSkin(skinId: number): Observable<AuthUser> {
-    return this.http.post<AuthUser>(`${this.apiUrl}/skins/${skinId}/select/`, {});
-  }
-}
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
