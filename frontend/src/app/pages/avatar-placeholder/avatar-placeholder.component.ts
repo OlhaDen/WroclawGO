@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { map } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ShopService } from '../../services/shop.service';
 import { AuthUser } from '../../models/auth.model';
@@ -17,6 +18,7 @@ export class AvatarPlaceholderComponent {
   private readonly shopService = inject(ShopService);
 
   readonly currentUser$ = this.authService.currentUser$;
+  readonly activeSkin$ = this.currentUser$.pipe(map((user) => this.getActiveSkinFromUser(user)));
   selectingSkin = false;
   skinError: string | null = null;
 
@@ -69,6 +71,18 @@ export class AvatarPlaceholderComponent {
     }
 
     return 'Rookie Traveler';
+  }
+
+  private getActiveSkinFromUser(user: AuthUser | null): AuthUser['selected_skin'] | null {
+    if (!user) {
+      return null;
+    }
+
+    if (user.selected_skin) {
+      return user.selected_skin;
+    }
+
+    return user.owned_skins.find((skin) => skin.name === 'Golden Aura') ?? null;
   }
 
   isOwned(user: AuthUser, skinId: number): boolean {

@@ -28,10 +28,10 @@
 
       <article class="dark-card avatar-view-card">
         <p class="label">Active skin</p>
-        <ng-container *ngIf="currentUser.selected_skin; else noActiveSkin">
-          <div class="skin-preview" [style.background]="currentUser.selected_skin.color_value"></div>
-          <h2>{{ currentUser.selected_skin.name }}</h2>
-          <p>{{ currentUser.selected_skin.color_value }}</p>
+        <ng-container *ngIf="activeSkin$ | async as activeSkin; else noActiveSkin">
+          <div class="skin-preview" [style.background]="activeSkin.color_value"></div>
+          <h2>{{ activeSkin.name }}</h2>
+          <p>{{ activeSkin.color_value }}</p>
         </ng-container>
         <ng-template #noActiveSkin>
           <p>No active skin selected yet.</p>
@@ -48,17 +48,19 @@
         </div>
 
         <div class="skin-grid" *ngIf="currentUser.owned_skins.length; else noOwnedSkins">
-          <article class="skin-card" *ngFor="let skin of currentUser.owned_skins">
-            <div class="shop-swatch" [style.background]="skin.color_value"></div>
-            <strong>{{ skin.name }}</strong>
-            <span>{{ skin.color_value }}</span>
-            <button
-              type="button"
-              [disabled]="selectingSkin || currentUser.selected_skin?.id === skin.id"
-              (click)="selectSkin(skin.id)">
-              {{ currentUser.selected_skin?.id === skin.id ? 'Selected' : 'Select' }}
-            </button>
-          </article>
+          <ng-container *ngIf="activeSkin$ | async as activeSkin">
+            <article class="skin-card" *ngFor="let skin of currentUser.owned_skins">
+              <div class="shop-swatch" [style.background]="skin.color_value"></div>
+              <strong>{{ skin.name }}</strong>
+              <span>{{ skin.color_value }}</span>
+              <button
+                type="button"
+                [disabled]="selectingSkin || activeSkin?.id === skin.id"
+                (click)="selectSkin(skin.id)">
+                {{ activeSkin?.id === skin.id ? 'Selected' : 'Select' }}
+              </button>
+            </article>
+          </ng-container>
         </div>
 
         <ng-template #noOwnedSkins>
