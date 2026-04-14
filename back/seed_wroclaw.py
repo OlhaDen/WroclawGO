@@ -6,7 +6,7 @@ import pandas as pd
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 django.setup()
 
-from attractions.models import Attraction, Category, User
+from attractions.models import Attraction, Category, SkinColor, User
 from django.contrib.gis.geos import Point
 
 POINTS_MAPPING = {
@@ -16,6 +16,14 @@ POINTS_MAPPING = {
     "Krasnal": 5,
     "Park": 10
 }
+
+SKIN_COLORS = [
+    {"name": "Sunset Rouge", "color_value": "#d9534f", "price": 40},
+    {"name": "Emerald Haze", "color_value": "#27ae60", "price": 55},
+    {"name": "Ocean Glow", "color_value": "#3498db", "price": 65},
+    {"name": "Moonlight Silver", "color_value": "#bdc3c7", "price": 75},
+    {"name": "Midnight Indigo", "color_value": "#34495e", "price": 90}
+]
 
 def get_or_create_category(name):
     category, created = Category.objects.get_or_create(name=name)
@@ -59,8 +67,20 @@ def seed_attractions(filename, category_name):
                 'description': f'Zapraszamy do odwiedzenia: {item["name"]}!',
                 'points_reward': reward
             }
-        )  
-            
+        )
+
+
+def seed_skin_colors():
+    for skin_data in SKIN_COLORS:
+        SkinColor.objects.get_or_create(
+            name=skin_data['name'],
+            defaults={
+                'color_value': skin_data['color_value'],
+                'price': skin_data['price']
+            }
+        )
+
+
 def create_admin_user():
     if not User.objects.filter(username="admin").exists():
         User.objects.create_superuser("admin", "admin@wroclaw.pl", "admin123")
@@ -72,3 +92,4 @@ if __name__ == '__main__':
     seed_attractions("./dataseed/kosciol.csv", "Kościół")
     seed_attractions("./dataseed/krasnale.csv", "Krasnal")
     seed_attractions("./dataseed/parks.csv", "Park")
+    seed_skin_colors()

@@ -1,23 +1,29 @@
 <section class="module-page">
   <div class="module-card">
-    <p class="eyebrow">Avatar Module</p>
-    <h1>Shop Placeholder</h1>
+    <p class="eyebrow">Avatar Shop</p>
+    <h1>Skin Colors</h1>
     <p>
-      Future avatar shop for cosmetics, accessories, and seasonal rewards purchased with game points.
+      Spend your earned points on avatar skin colors. Purchased skins become available in your profile and can be selected as the active appearance.
     </p>
 
-    <div class="module-grid">
-      <article>
-        <h2>Outfits</h2>
-        <p>Future category for jacket, hat, and explorer-themed sets.</p>
-      </article>
-      <article>
-        <h2>Accessories</h2>
-        <p>Future badges, frames, and map-themed collectibles.</p>
-      </article>
-      <article>
-        <h2>Pricing</h2>
-        <p>Prices will be linked to points and player level requirements.</p>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="loading" class="loading-message">Loading skin colors...</div>
+
+    <div *ngIf="!loading" class="shop-grid">
+      <article *ngFor="let skin of skinColors" class="shop-card">
+        <div class="shop-swatch" [style.background]="skin.color_value"></div>
+        <h2>{{ skin.name }}</h2>
+        <p class="color-value">{{ skin.color_value }}</p>
+        <p class="price">{{ skin.price }} points</p>
+
+        <ng-container *ngIf="currentUser$ | async as currentUser">
+          <button
+            type="button"
+            [disabled]="isOwned(currentUser, skin) || currentUser.points < skin.price || loading"
+            (click)="purchaseSkin(skin.id)">
+            {{ isOwned(currentUser, skin) ? 'Owned' : currentUser.points >= skin.price ? 'Purchase' : 'Insufficient points' }}
+          </button>
+        </ng-container>
       </article>
     </div>
 
