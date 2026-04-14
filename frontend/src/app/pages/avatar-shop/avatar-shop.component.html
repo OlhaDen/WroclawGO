@@ -1,32 +1,81 @@
-<section class="module-page">
-  <div class="module-card">
-    <p class="eyebrow">Avatar Shop</p>
-    <h1>Skin Colors</h1>
-    <p>
-      Spend your earned points on avatar skin colors. Purchased skins become available in your profile and can be selected as the active appearance.
-    </p>
+<section class="avatar-shop-page">
+  <div class="shop-shell">
+    <div class="shop-header">
+      <div class="shop-header-copy">
+        <p class="eyebrow">Avatar Shop</p>
+        <h1>Premium Skin Colors</h1>
+        <p class="intro">
+          Spend your points on polished avatar skins and upgrade your avatar with premium cosmetic previews.
+          Owned skins can be selected instantly and the active skin is highlighted here.
+        </p>
+      </div>
 
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <div *ngIf="loading" class="loading-message">Loading skin colors...</div>
-
-    <div *ngIf="!loading" class="shop-grid">
-      <article *ngFor="let skin of skinColors" class="shop-card">
-        <div class="shop-swatch" [style.background]="skin.color_value"></div>
-        <h2>{{ skin.name }}</h2>
-        <p class="color-value">{{ skin.color_value }}</p>
-        <p class="price">{{ skin.price }} points</p>
-
-        <ng-container *ngIf="currentUser$ | async as currentUser">
-          <button
-            type="button"
-            [disabled]="isOwned(currentUser, skin) || currentUser.points < skin.price || loading"
-            (click)="purchaseSkin(skin.id)">
-            {{ isOwned(currentUser, skin) ? 'Owned' : currentUser.points >= skin.price ? 'Purchase' : 'Insufficient points' }}
-          </button>
-        </ng-container>
-      </article>
+      <div class="points-panel" *ngIf="currentUser$ | async as currentUser">
+        <span class="points-label">Available points</span>
+        <strong>{{ currentUser.points }}</strong>
+      </div>
     </div>
 
-    <a routerLink="/your-avatar">Back to avatar dashboard</a>
+    <div class="status-row" *ngIf="currentUser$ | async as currentUser">
+      <div class="status-card">
+        <span class="status-title">Active skin</span>
+        <span class="status-value">
+          {{ currentUser.selected_skin?.name || 'No skin selected' }}
+        </span>
+      </div>
+      <div class="status-card status-card-soft">
+        <span class="status-title">Owned skins</span>
+        <span class="status-value">{{ currentUser.owned_skins.length }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="notification error-notice">{{ errorMessage }}</div>
+    <div *ngIf="loading" class="notification loading-notice">Loading skin colors...</div>
+
+    <ng-container *ngIf="!loading">
+      <div class="shop-grid" *ngIf="currentUser$ | async as currentUser">
+        <article
+          *ngFor="let skin of skinColors"
+          class="shop-card"
+          [class.shop-card--active]="isActive(currentUser, skin)"
+          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin)">
+
+        <div class="shop-card__media">
+          <img
+            [src]="getSkinImageUrl(skin)"
+            [alt]="skin.name + ' preview'"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="shop-card__content">
+          <div class="shop-card__headline">
+            <div>
+              <p class="shop-card__label">Skin preview</p>
+              <h2>{{ skin.name }}</h2>
+            </div>
+            <span class="shop-card__badge" [ngClass]="badgeClass(currentUser, skin)">
+              {{ badgeLabel(currentUser, skin) }}
+            </span>
+          </div>
+
+          <p class="shop-card__price">{{ skin.price }} points</p>
+        </div>
+
+        <button
+          type="button"
+          class="shop-card__action"
+          [ngClass]="buttonClass(currentUser, skin)"
+          [disabled]="buttonDisabled(currentUser, skin)"
+          (click)="onPrimaryAction(currentUser, skin)">
+          {{ buttonLabel(currentUser, skin) }}
+        </button>
+      </article>
+      </div>
+    </ng-container>
+
+    <div class="shop-footer">
+      <a routerLink="/your-avatar" class="shop-back-link">Back to avatar dashboard</a>
+    </div>
   </div>
 </section>

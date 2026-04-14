@@ -3,4 +3,5 @@ export interface SkinColor {
   name: string;
   color_value: string;
   price: number;
+  imageFileName?: string;
 }
