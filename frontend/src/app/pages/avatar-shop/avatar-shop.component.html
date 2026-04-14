@@ -40,28 +40,32 @@
           [class.shop-card--active]="isActive(currentUser, skin)"
           [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin)">
 
-        <div class="shop-card__media">
+        <!-- Image section -->
+        <div class="shop-card__image-wrapper">
           <img
             [src]="getSkinImageUrl(skin)"
-            [alt]="skin.name + ' preview'"
+            [alt]="skin.name + ' avatar skin preview'"
+            class="shop-card__image"
             loading="lazy"
+            onerror="this.src='/assets/avatar-skins/placeholder.png'"
           />
         </div>
 
-        <div class="shop-card__content">
-          <div class="shop-card__headline">
-            <div>
-              <p class="shop-card__label">Skin preview</p>
-              <h2>{{ skin.name }}</h2>
+        <!-- Content section -->
+        <div class="shop-card__body">
+          <div class="shop-card__header">
+            <div class="shop-card__title-block">
+              <h2 class="shop-card__title">{{ skin.name }}</h2>
             </div>
             <span class="shop-card__badge" [ngClass]="badgeClass(currentUser, skin)">
               {{ badgeLabel(currentUser, skin) }}
             </span>
           </div>
 
-          <p class="shop-card__price">{{ skin.price }} points</p>
+          <p class="shop-card__price">{{ skin.price }}<span class="shop-card__price-unit"> points</span></p>
         </div>
 
+        <!-- Action section -->
         <button
           type="button"
           class="shop-card__action"
