@@ -38,8 +38,8 @@
           *ngFor="let skin of skinColors"
           class="shop-card"
           [class.shop-card--active]="isActive(currentUser, skin)"
-          [class.shop-card--premium]=\"isPremium(skin)\"
-          [class.shop-card--locked]=\"!canAfford(currentUser, skin) && !isOwned(currentUser, skin) && !isPremium(skin)\">
+          [class.shop-card--premium]="isPremium(skin)"
+          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin) && !isPremium(skin)">
 
         <!-- Image section -->
         <div class="shop-card__image-wrapper">
