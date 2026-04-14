@@ -3,5 +3,7 @@ export interface SkinColor {
   name: string;
   color_value: string;
   price: number;
-  imageFileName?: string;
+  image_file_name?: string;
+  imageFileName?: string; // Fallback field name
+  is_premium?: boolean;
 }

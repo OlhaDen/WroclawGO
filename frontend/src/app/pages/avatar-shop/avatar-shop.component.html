@@ -38,7 +38,8 @@
           *ngFor="let skin of skinColors"
           class="shop-card"
           [class.shop-card--active]="isActive(currentUser, skin)"
-          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin)">
+          [class.shop-card--premium]=\"isPremium(skin)\"
+          [class.shop-card--locked]=\"!canAfford(currentUser, skin) && !isOwned(currentUser, skin) && !isPremium(skin)\">
 
         <!-- Image section -->
         <div class="shop-card__image-wrapper">
@@ -62,7 +63,7 @@
             </span>
           </div>
 
-          <p class="shop-card__price">{{ skin.price }}<span class="shop-card__price-unit"> points</span></p>
+          <p class=\"shop-card__price\"><span *ngIf=\"!isPremium(skin)\">{{ skin.price }}</span><span *ngIf=\"isPremium(skin)\">Free</span><span class=\"shop-card__price-unit\"> <span *ngIf=\"!isPremium(skin)\">points</span></span></p>
         </div>
 
         <!-- Action section -->

@@ -18,11 +18,12 @@ POINTS_MAPPING = {
 }
 
 SKIN_COLORS = [
-    {"name": "Sunset Rouge", "color_value": "#d9534f", "price": 40},
-    {"name": "Emerald Haze", "color_value": "#27ae60", "price": 55},
-    {"name": "Ocean Glow", "color_value": "#3498db", "price": 65},
-    {"name": "Moonlight Silver", "color_value": "#bdc3c7", "price": 75},
-    {"name": "Midnight Indigo", "color_value": "#34495e", "price": 90}
+    {"name": "Sunset Rouge", "color_value": "#d9534f", "price": 40, "image_file_name": "sunset-rouge.png", "is_premium": False},
+    {"name": "Emerald Haze", "color_value": "#27ae60", "price": 55, "image_file_name": "emerald-haze.png", "is_premium": False},
+    {"name": "Ocean Glow", "color_value": "#3498db", "price": 65, "image_file_name": "ocean-glow.png", "is_premium": False},
+    {"name": "Blush Pink", "color_value": "#ff69b4", "price": 75, "image_file_name": "blush-pink.png", "is_premium": False},
+    {"name": "Midnight Indigo", "color_value": "#34495e", "price": 90, "image_file_name": "midnight-indigo.png", "is_premium": False},
+    {"name": "Golden Aura", "color_value": "#f39c12", "price": 0, "image_file_name": "golden-aura.png", "is_premium": True}
 ]
 
 def get_or_create_category(name):
@@ -76,7 +77,9 @@ def seed_skin_colors():
             name=skin_data['name'],
             defaults={
                 'color_value': skin_data['color_value'],
-                'price': skin_data['price']
+                'price': skin_data['price'],
+                'image_file_name': skin_data['image_file_name'],
+                'is_premium': skin_data['is_premium']
             }
         )
 

@@ -14,6 +14,8 @@ class SkinColor(models.Model):
     name = models.CharField(max_length=100, unique=True)
     color_value = models.CharField(max_length=7)
     price = models.PositiveIntegerField(default=50)
+    image_file_name = models.CharField(max_length=255, default='default.png', help_text='Filename for the skin preview image')
+    is_premium = models.BooleanField(default=False, help_text='If True, this skin cannot be purchased and is given to all users')
 
     class Meta:
         verbose_name = 'Skin Color'

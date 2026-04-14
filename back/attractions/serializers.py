@@ -12,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class SkinColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = SkinColor
-        fields = ['id', 'name', 'color_value', 'price']
+        fields = ['id', 'name', 'color_value', 'price', 'image_file_name', 'is_premium']
 
 class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.SerializerMethodField()

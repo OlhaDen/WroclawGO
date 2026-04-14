@@ -165,6 +165,16 @@ h1 {
   transform: translateY(-8px);
 }
 
+.shop-card--premium {
+  border-color: #d4af37;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(212, 175, 55, 0.03));
+}
+
+.shop-card--premium:hover {
+  border-color: #dab842;
+  box-shadow: 0 16px 48px rgba(212, 175, 55, 0.2);
+}
+
 .shop-card--locked {
   filter: grayscale(0.35) saturate(0.75);
   opacity: 0.88;
@@ -241,6 +251,12 @@ h1 {
 .badge--active {
   color: #3d5aff;
   background: rgba(61, 90, 255, 0.12);
+}
+
+.badge--default {
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.12);
+  font-weight: 800;
 }
 
 .badge--owned {
