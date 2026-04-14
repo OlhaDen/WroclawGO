@@ -20,11 +20,7 @@
       <div class="status-card">
         <span class="status-title">Active skin</span>
         <span class="status-value">
-          {{ currentUser.selected_skin?.name || 'No skin selected' }}
-        </span>
-      </div>
-      <div class="status-card status-card-soft">
-        <span class="status-title">Owned skins</span>
+          {{ activeSkinName(currentUser) }}
         <span class="status-value">{{ currentUser.owned_skins.length }}</span>
       </div>
     </div>

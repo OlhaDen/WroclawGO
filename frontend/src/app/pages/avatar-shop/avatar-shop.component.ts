@@ -7,6 +7,7 @@ import { AuthUser } from '../../models/auth.model';
 import { SkinColor } from '../../models/skin-color.model';
 
 const SKIN_IMAGE_PATH = '/assets/avatar-skins/';
+const DEFAULT_SKIN_NAME = 'Golden Aura';
 
 @Component({
   selector: 'app-avatar-shop',
@@ -64,6 +65,10 @@ export class AvatarShopComponent implements OnInit {
     return `${SKIN_IMAGE_PATH}${this.getSkinImageFileName(skin)}`;
   }
 
+  activeSkinName(user: AuthUser): string {
+    return user.selected_skin?.name ?? DEFAULT_SKIN_NAME;
+  }
+
   toSlug(value: string): string {
     return value
       .toLowerCase()
@@ -76,7 +81,7 @@ export class AvatarShopComponent implements OnInit {
   }
 
   isActive(user: AuthUser, skin: SkinColor): boolean {
-    return user.selected_skin?.id === skin.id;
+    return user.selected_skin?.id === skin.id || (!user.selected_skin && skin.name === DEFAULT_SKIN_NAME);
   }
 
   canAfford(user: AuthUser, skin: SkinColor): boolean {
