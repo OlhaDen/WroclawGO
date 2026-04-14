@@ -19,11 +19,13 @@
     <div class="status-row" *ngIf="currentUser$ | async as currentUser">
       <div class="status-card">
         <span class="status-title">Active skin</span>
-        <span class="status-value">{{ activeSkinName(currentUser) }}</span>
+        <span class="status-value">
+          {{ skinColors.length ? activeSkinName() : (loading ? 'Loading active skin...' : 'No active skin selected yet') }}
+        </span>
       </div>
       <div class="status-card status-card-soft">
         <span class="status-title">Owned skins</span>
-        <span class="status-value">{{ currentUser.owned_skins.length }}</span>
+        <span class="status-value">{{ ownedSkinCount() }}</span>
       </div>
     </div>
 
@@ -35,8 +37,8 @@
         <article
           *ngFor="let skin of skinColors"
           class="shop-card"
-          [class.shop-card--active]="isActive(currentUser, skin)"
-          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(currentUser, skin)">
+          [class.shop-card--active]="isActive(skin)"
+          [class.shop-card--locked]="!canAfford(currentUser, skin) && !isOwned(skin)">
 
           <!-- Image section -->
           <div class="shop-card__image-wrapper">
@@ -55,8 +57,8 @@
               <div class="shop-card__title-block">
                 <h2 class="shop-card__title">{{ skin.name }}</h2>
               </div>
-              <span class="shop-card__badge" [ngClass]="badgeClass(currentUser, skin)">
-                {{ badgeLabel(currentUser, skin) }}
+              <span class="shop-card__badge" [ngClass]="badgeClass(skin)">
+                {{ badgeLabel(skin) }}
               </span>
             </div>
 
